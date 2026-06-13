@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Avatar, EmptyState } from '../components/ui'
+import { Avatar, EmptyState, Btn } from '../components/ui'
 import type { Movimentacao } from '../types'
 
 interface Props {
@@ -27,14 +27,19 @@ export function Movimentacoes({ movimentacoes }: Props) {
         <span style={{ fontSize: 13, color: '#9ca3af' }}>{movimentacoes.length} registros</span>
       </div>
 
-      <input
-        value={search} onChange={e => setSearch(e.target.value)}
-        placeholder="Buscar por equipamento, ação ou colaborador..."
-        style={{
-          width: '100%', padding: '8px 12px', border: '1px solid #ddd',
-          borderRadius: 8, fontSize: 14, outline: 'none', marginBottom: 16, boxSizing: 'border-box',
-        }}
-      />
+      <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>
+        <input
+          value={search} onChange={e => setSearch(e.target.value)}
+          placeholder="Buscar por equipamento, ação ou colaborador..."
+          style={{
+            flex: 1, padding: '8px 12px', border: '1px solid #ddd',
+            borderRadius: 8, fontSize: 14, outline: 'none', boxSizing: 'border-box',
+          }}
+        />
+        {search && (
+          <Btn variant="secondary" onClick={() => setSearch('')}>Limpar</Btn>
+        )}
+      </div>
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
