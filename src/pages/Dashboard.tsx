@@ -6,7 +6,7 @@ interface Props {
   movimentacoes: Movimentacao[]
 }
 
-function MetricCard({ label, value, color }: { label: string; value: number; color: string }) {
+function MetricCard({ label, value, color }: { label: string; value: number | string; color: string }) {
   return (
     <div style={{
       background: '#fff', borderRadius: 12, padding: '20px 24px',
@@ -24,6 +24,8 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
   const homeOffice = equipamentos.filter(e => e.status === 'Home office').length
   const disponiveis = equipamentos.filter(e => e.status === 'Disponível').length
   const pendentes = equipamentos.filter(e => e.status === 'Pendente devolução').length
+  const valorTotal = equipamentos.reduce((acc, e) => acc + (e.valor ?? 0), 0)
+  const valorFormatado = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
   return (
     <div>
@@ -34,6 +36,7 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
         <MetricCard label="Home office" value={homeOffice} color="#7c3aed" />
         <MetricCard label="Disponíveis" value={disponiveis} color="#15803d" />
         <MetricCard label="Pendentes devolução" value={pendentes} color="#b91c1c" />
+        <MetricCard label="Valor total" value={valorFormatado} color="#0d9488" />
       </div>
 
       {pendentes > 0 && (
