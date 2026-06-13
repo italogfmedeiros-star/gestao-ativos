@@ -75,8 +75,8 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
       </div>
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 180px 90px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
-          {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Ações'].map(h => (
+        <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 90px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
+          {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Valor', 'Ações'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
           ))}
         </div>
@@ -85,7 +85,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
         ) : (
           filtered.map(eq => (
             <div key={eq.id} style={{
-              display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 180px 90px',
+              display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 90px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
             }}>
               <span style={{ fontSize: 13, fontWeight: 700, color: '#2563eb' }}>{eq.id}</span>
@@ -97,6 +97,11 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
               <BadgeStatus status={eq.status} />
               <span style={{ fontSize: 13, color: '#374151' }}>
                 {(eq.colaborador as any)?.nome ?? <span style={{ color: '#9ca3af' }}>—</span>}
+              </span>
+              <span style={{ fontSize: 13, color: '#374151' }}>
+                {eq.valor != null
+                  ? eq.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+                  : <span style={{ color: '#9ca3af' }}>—</span>}
               </span>
               <div style={{ display: 'flex', gap: 6 }}>
                 <Btn variant="secondary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setEditing(eq)}>

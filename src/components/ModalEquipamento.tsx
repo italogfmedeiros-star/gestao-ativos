@@ -21,7 +21,9 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
     colaborador_id: equipamento?.colaborador_id?.toString() ?? '',
     status: equipamento?.status ?? 'Disponível',
     alugado: equipamento?.alugado ?? false,
-    valor: equipamento?.valor?.toString() ?? '',
+    valor: equipamento?.valor != null
+      ? equipamento.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+      : '',
     observacao: equipamento?.observacao ?? '',
   })
   const [saving, setSaving] = useState(false)
@@ -40,7 +42,7 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
       colaborador_id: form.colaborador_id ? Number(form.colaborador_id) : null,
       status: form.status as Equipamento['status'],
       alugado: form.alugado,
-      valor: form.valor ? parseFloat(form.valor.replace(',', '.')) : null,
+      valor: form.valor ? parseFloat(form.valor.replace(/\./g, '').replace(',', '.')) : null,
       observacao: form.observacao.trim() || null,
     })
     setSaving(false)
