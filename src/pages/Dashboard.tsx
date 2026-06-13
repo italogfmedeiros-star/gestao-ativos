@@ -36,7 +36,9 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
         <MetricCard label="Home office" value={homeOffice} color="#7c3aed" />
         <MetricCard label="Disponíveis" value={disponiveis} color="#15803d" />
         <MetricCard label="Pendentes devolução" value={pendentes} color="#b91c1c" />
-        <MetricCard label="Valor total" value={valorFormatado} color="#0d9488" />
+        <div style={{ gridColumn: 'span 2' }}>
+          <MetricCard label="Valor total" value={valorFormatado} color="#0d9488" />
+        </div>
       </div>
 
       {pendentes > 0 && (
