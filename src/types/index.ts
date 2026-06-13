@@ -13,13 +13,17 @@ export type TipoEquipamento =
   | 'Cadeira'
   | 'Outros'
 export type Setor =
-  | 'Home office'
-  | 'Manipulação'
   | 'Administrativo'
-  | 'Atendimento'
-  | 'RH'
-  | 'Estoque'
-  | 'Qualidade'
+  | 'Controle de qualidade'
+  | 'Expedição'
+  | 'Farmaceutico'
+  | 'Home Office'
+  | 'Inclusão'
+  | 'Laboratorio UE'
+  | 'Laboratorio UI'
+  | 'Orçamento'
+  | 'Recepção'
+  | 'Vendas'
 
 export interface Colaborador {
   id: number
