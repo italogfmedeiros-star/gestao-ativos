@@ -49,11 +49,9 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
           <option value="Ativo">Ativos</option>
           <option value="Desligado">Desligados</option>
         </select>
-        {(search || filterStatus) && (
-          <Btn variant="secondary" onClick={() => { setSearch(''); setFilterStatus('') }}>
-            Limpar
-          </Btn>
-        )}
+        <Btn variant="secondary" onClick={() => { setSearch(''); setFilterStatus('') }}>
+          Limpar
+        </Btn>
       </div>
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>

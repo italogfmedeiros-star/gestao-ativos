@@ -69,11 +69,9 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
             <option key={t} value={t}>{t}</option>
           ))}
         </select>
-        {(search || filterStatus || filterTipo) && (
-          <Btn variant="secondary" onClick={() => { setSearch(''); setFilterStatus(''); setFilterTipo('') }}>
-            Limpar
-          </Btn>
-        )}
+        <Btn variant="secondary" onClick={() => { setSearch(''); setFilterStatus(''); setFilterTipo('') }}>
+          Limpar
+        </Btn>
       </div>
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
