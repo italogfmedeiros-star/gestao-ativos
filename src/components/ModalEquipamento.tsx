@@ -21,6 +21,7 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
     colaborador_id: equipamento?.colaborador_id?.toString() ?? '',
     status: equipamento?.status ?? 'Disponível',
     alugado: equipamento?.alugado ?? false,
+    valor: equipamento?.valor?.toString() ?? '',
     observacao: equipamento?.observacao ?? '',
   })
   const [saving, setSaving] = useState(false)
@@ -39,6 +40,7 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
       colaborador_id: form.colaborador_id ? Number(form.colaborador_id) : null,
       status: form.status as Equipamento['status'],
       alugado: form.alugado,
+      valor: form.valor ? parseFloat(form.valor.replace(',', '.')) : null,
       observacao: form.observacao.trim() || null,
     })
     setSaving(false)
@@ -89,6 +91,13 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
       </Field>
       <Field label="Observação">
         <Textarea value={form.observacao} placeholder="Informações adicionais..." onChange={e => set('observacao', e.target.value)} />
+      </Field>
+      <Field label="Valor R$">
+        <Input
+          value={form.valor}
+          placeholder="0,00"
+          onChange={e => set('valor', e.target.value)}
+        />
       </Field>
       <label style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 20, cursor: 'pointer', fontSize: 14 }}>
         <input type="checkbox" checked={form.alugado} onChange={e => set('alugado', e.target.checked)} />

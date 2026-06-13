@@ -43,6 +43,7 @@ export interface Equipamento {
   colaborador_id: number | null
   status: StatusEquipamento
   alugado: boolean
+  valor: number | null
   observacao: string | null
   created_at: string
   colaborador?: Colaborador | null
