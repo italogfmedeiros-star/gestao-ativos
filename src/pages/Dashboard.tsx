@@ -12,7 +12,7 @@ function MetricCard({ label, value, color }: { label: string; value: number | st
       background: '#fff', borderRadius: 12, padding: '20px 24px',
       border: '1px solid #f0f0f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
     }}>
-      <div style={{ fontSize: 28, fontWeight: 800, color }}>{value}</div>
+      <div style={{ fontSize: 24, fontWeight: 800, color, wordBreak: 'break-word' }}>{value}</div>
       <div style={{ fontSize: 13, color: '#6b7280', marginTop: 4 }}>{label}</div>
     </div>
   )
@@ -30,7 +30,7 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
   return (
     <div>
       <h1 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 800, color: '#111' }}>Dashboard</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 32 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 32 }}>
         <MetricCard label="Total de equipamentos" value={total} color="#111" />
         <MetricCard label="Em uso" value={emUso} color="#1d4ed8" />
         <MetricCard label="Home office" value={homeOffice} color="#7c3aed" />
