@@ -1,4 +1,4 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
 import { Modal, Field, Input, Btn, BadgeStatus } from './ui'
 import type { Colaborador, Equipamento } from '../types'
 
@@ -25,10 +25,10 @@ export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClos
   }
 
   return (
-    <Modal title={`Desligar â€” ${colaborador.nome}`} onClose={onClose} width={560}>
+    <Modal title={`Desligar — ${colaborador.nome}`} onClose={onClose} width={560}>
       <p style={{ margin: '0 0 20px', color: '#6b7280', fontSize: 14 }}>
-        Marque os equipamentos que foram devolvidos. Os nÃ£o marcados ficarÃ£o como{' '}
-        <strong>Pendente devoluÃ§Ã£o</strong>.
+        Marque os equipamentos que foram devolvidos. Os não marcados ficarão como{' '}
+        <strong>Pendente devolução</strong>.
       </p>
       {equipamentos.length === 0 ? (
         <p style={{ color: '#9ca3af', fontSize: 14 }}>Nenhum equipamento vinculado.</p>
@@ -51,17 +51,17 @@ export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClos
                 style={{ width: 16, height: 16 }}
               />
               <span style={{ flex: 1, fontSize: 14 }}>
-                <strong>{eq.id}</strong> â€” {eq.descricao}
+                <strong>{eq.id}</strong> — {eq.descricao}
               </span>
               <BadgeStatus status={eq.status} />
             </label>
           ))}
         </div>
       )}
-      <Field label="ResponsÃ¡vel pelo processo">
+      <Field label="Responsável pelo processo">
         <Input
           value={responsavel}
-          placeholder="Nome de quem estÃ¡ registrando"
+          placeholder="Nome de quem está registrando"
           onChange={e => setResponsavel(e.target.value)}
         />
       </Field>
@@ -74,4 +74,3 @@ export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClos
     </Modal>
   )
 }
-

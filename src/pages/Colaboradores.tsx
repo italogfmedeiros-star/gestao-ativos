@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { Avatar, Btn, EmptyState } from '../components/ui'
 import { ModalColaborador } from '../components/ModalColaborador'
 import { ModalDesligamento } from '../components/ModalDesligamento'
+import { ModalColaboradorDetalhe } from '../components/ModalColaboradorDetalhe'
 import type { Colaborador, Equipamento } from '../types'
 
 interface Props {
@@ -16,6 +17,7 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
   const [filterStatus, setFilterStatus] = useState('Ativo')
   const [editing, setEditing] = useState<Colaborador | null | 'new'>(null)
   const [desligando, setDesligando] = useState<Colaborador | null>(null)
+  const [detalhe, setDetalhe] = useState<Colaborador | null>(null)
 
   const filtered = useMemo(() => {
     return colaboradores.filter(c => {
@@ -71,13 +73,19 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
                 padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
               }}>
                 <Avatar nome={col.nome} />
-                <div>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#111' }}>{col.nome}</div>
+                <div
+                  onClick={() => setDetalhe(col)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#2563eb' }}>{col.nome}</div>
                   {col.email && <div style={{ fontSize: 12, color: '#9ca3af' }}>{col.email}</div>}
                 </div>
                 <span style={{ fontSize: 13, color: '#6b7280' }}>{col.setor ?? '—'}</span>
                 <span style={{ fontSize: 13, color: '#6b7280' }}>{col.regime}</span>
-                <span style={{ fontSize: 13, fontWeight: 600, color: equips.length ? '#2563eb' : '#9ca3af' }}>
+                <span
+                  onClick={() => setDetalhe(col)}
+                  style={{ fontSize: 13, fontWeight: 600, color: equips.length ? '#2563eb' : '#9ca3af', cursor: equips.length ? 'pointer' : 'default' }}
+                >
                   {equips.length}
                 </span>
                 <div style={{ display: 'flex', gap: 6 }}>
@@ -110,6 +118,13 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
           equipamentos={equipamentosDoColaborador(desligando.id)}
           onConfirm={(devolvidos, responsavel) => onDesligar(desligando.id, devolvidos, responsavel)}
           onClose={() => setDesligando(null)}
+        />
+      )}
+      {detalhe && (
+        <ModalColaboradorDetalhe
+          colaborador={detalhe}
+          equipamentos={equipamentosDoColaborador(detalhe.id)}
+          onClose={() => setDetalhe(null)}
         />
       )}
     </div>
