@@ -88,7 +88,10 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
               display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 90px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
             }}>
-              <span style={{ fontSize: 13, fontWeight: 700, color: '#2563eb' }}>{eq.id}</span>
+              <span
+                onClick={() => setEditing(eq)}
+                style={{ fontSize: 13, fontWeight: 700, color: '#2563eb', cursor: 'pointer' }}
+              >{eq.id}</span>
               <span style={{ fontSize: 13, color: '#111' }}>
                 {eq.descricao}
                 {eq.alugado && <span style={{ fontSize: 11, color: '#9ca3af', marginLeft: 6 }}>(alugado)</span>}
