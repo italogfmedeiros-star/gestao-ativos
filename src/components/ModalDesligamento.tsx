@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Modal, Field, Input, Btn, BadgeStatus } from './ui'
+import { Modal, Field, Input, Btn } from './ui'
 import type { Colaborador, Equipamento } from '../types'
 
 interface Props {
@@ -10,54 +10,41 @@ interface Props {
 }
 
 export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClose }: Props) {
-  const [devolvidos, setDevolvidos] = useState<string[]>([])
   const [responsavel, setResponsavel] = useState('')
   const [saving, setSaving] = useState(false)
 
-  const toggle = (id: string) =>
-    setDevolvidos(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
-
   const handleConfirm = async () => {
     setSaving(true)
-    await onConfirm(devolvidos, responsavel)
+    await onConfirm([], responsavel)
     setSaving(false)
     onClose()
   }
 
   return (
-    <Modal title={`Desligar — ${colaborador.nome}`} onClose={onClose} width={560}>
+    <Modal title={`Desligar — ${colaborador.nome}`} onClose={onClose} width={480}>
       <p style={{ margin: '0 0 20px', color: '#6b7280', fontSize: 14 }}>
-        Marque os equipamentos que foram devolvidos. Os não marcados ficarão como{' '}
-        <strong>Pendente devolução</strong>.
+        Todos os equipamentos vinculados serão automaticamente marcados como{' '}
+        <strong>Disponível</strong> e desvinculados do colaborador.
       </p>
-      {equipamentos.length === 0 ? (
-        <p style={{ color: '#9ca3af', fontSize: 14 }}>Nenhum equipamento vinculado.</p>
-      ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
-          {equipamentos.map(eq => (
-            <label
-              key={eq.id}
-              style={{
-                display: 'flex', alignItems: 'center', gap: 12,
-                padding: '10px 14px', border: '1px solid #e5e7eb',
-                borderRadius: 8, cursor: 'pointer',
-                background: devolvidos.includes(eq.id) ? '#f0fdf4' : '#fff',
-              }}
-            >
-              <input
-                type="checkbox"
-                checked={devolvidos.includes(eq.id)}
-                onChange={() => toggle(eq.id)}
-                style={{ width: 16, height: 16 }}
-              />
-              <span style={{ flex: 1, fontSize: 14 }}>
-                <strong>{eq.id}</strong> — {eq.descricao}
-              </span>
-              <BadgeStatus status={eq.status} />
-            </label>
-          ))}
+
+      {equipamentos.length > 0 && (
+        <div style={{
+          background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 8,
+          padding: '12px 14px', marginBottom: 20,
+        }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>
+            Equipamentos afetados ({equipamentos.length})
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+            {equipamentos.map(eq => (
+              <div key={eq.id} style={{ fontSize: 13, color: '#374151' }}>
+                <strong style={{ color: '#2563eb' }}>{eq.id}</strong> — {eq.descricao}
+              </div>
+            ))}
+          </div>
         </div>
       )}
+
       <Field label="Responsável pelo processo">
         <Input
           value={responsavel}
@@ -65,6 +52,7 @@ export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClos
           onChange={e => setResponsavel(e.target.value)}
         />
       </Field>
+
       <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
         <Btn variant="secondary" onClick={onClose}>Cancelar</Btn>
         <Btn variant="danger" onClick={handleConfirm} disabled={saving}>

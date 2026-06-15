@@ -101,21 +101,19 @@ export function useStore(): Store {
     await load()
   }
 
-  const desligarColaborador = async (colaboradorId: number, devolvidos: string[], responsavel: string) => {
+  const desligarColaborador = async (colaboradorId: number, _devolvidos: string[], responsavel: string) => {
     const equipamentosDoColaborador = equipamentos.filter(e => e.colaborador_id === colaboradorId)
 
     for (const eq of equipamentosDoColaborador) {
-      const devolvido = devolvidos.includes(eq.id)
-      const novoStatus: StatusEquipamento = devolvido ? 'Disponível' : 'Pendente devolução'
       await supabase.from('equipamentos').update({
-        status: novoStatus,
-        colaborador_id: devolvido ? null : eq.colaborador_id,
+        status: 'Disponível',
+        colaborador_id: null,
       }).eq('id', eq.id)
 
       await supabase.from('movimentacoes').insert({
         data: new Date().toISOString().split('T')[0],
         equipamento_id: eq.id,
-        acao: devolvido ? `Devolvido no desligamento de colaborador` : `Pendente devolução — colaborador desligado`,
+        acao: 'Disponível — desligamento de colaborador',
         colaborador_id: colaboradorId,
         responsavel,
       })
