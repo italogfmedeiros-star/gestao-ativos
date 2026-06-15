@@ -6,6 +6,7 @@ const statusColors: Record<StatusEquipamento, { bg: string; color: string }> = {
   'Home office':        { bg: '#ede9fe', color: '#7c3aed' },
   'Disponível':         { bg: '#dcfce7', color: '#15803d' },
   'Pendente devolução': { bg: '#fee2e2', color: '#b91c1c' },
+  'Baixado':            { bg: '#f3f4f6', color: '#6b7280' },
 }
 
 export function BadgeStatus({ status }: { status: StatusEquipamento }) {

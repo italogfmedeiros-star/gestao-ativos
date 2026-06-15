@@ -1,6 +1,7 @@
 export type Regime = 'Presencial' | 'Home office' | 'Híbrido'
 export type StatusColaborador = 'Ativo' | 'Desligado'
-export type StatusEquipamento = 'Em uso' | 'Home office' | 'Disponível' | 'Pendente devolução'
+export type StatusEquipamento = 'Em uso' | 'Home office' | 'Disponível' | 'Pendente devolução' | 'Baixado'
+export type MotivoBaixa = 'Upgrade' | 'Defeito' | 'Perda' | 'Obsolescência'
 export type TipoEquipamento =
   | 'Computador'
   | 'Notebook'

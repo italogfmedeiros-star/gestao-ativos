@@ -85,6 +85,7 @@ export default function App() {
             colaboradores={store.colaboradores}
             onSave={store.saveEquipamento}
             onDelete={store.deleteEquipamento}
+            onBaixar={store.baixarEquipamento}
           />
         )}
         {page === 'colaboradores' && (

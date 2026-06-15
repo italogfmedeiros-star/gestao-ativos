@@ -1,24 +1,28 @@
 import { useState, useMemo } from 'react'
 import { BadgeStatus, Btn, EmptyState } from '../components/ui'
 import { ModalEquipamento } from '../components/ModalEquipamento'
-import type { Equipamento, Colaborador, StatusEquipamento, TipoEquipamento } from '../types'
+import { ModalBaixaEquipamento } from '../components/ModalBaixaEquipamento'
+import type { Equipamento, Colaborador, MotivoBaixa, StatusEquipamento, TipoEquipamento } from '../types'
 
 interface Props {
   equipamentos: Equipamento[]
   colaboradores: Colaborador[]
   onSave: (data: Partial<Equipamento> & { id: string; descricao: string }) => Promise<void>
   onDelete: (id: string) => Promise<void>
+  onBaixar: (equipamentoId: string, motivo: MotivoBaixa, observacao: string) => Promise<void>
 }
 
-export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: Props) {
+export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, onBaixar }: Props) {
   const [search, setSearch] = useState('')
   const [filterStatus, setFilterStatus] = useState('')
   const [filterTipo, setFilterTipo] = useState('')
   const [editing, setEditing] = useState<Equipamento | null | 'new'>(null)
+  const [baixando, setBaixando] = useState<Equipamento | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
 
   const filtered = useMemo(() => {
     return equipamentos.filter(e => {
+      if (!filterStatus && e.status === 'Baixado') return false
       const q = search.toLowerCase()
       const matchSearch = !q || e.id.toLowerCase().includes(q) || e.descricao.toLowerCase().includes(q) ||
         (e.colaborador as any)?.nome?.toLowerCase().includes(q)
@@ -55,8 +59,8 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
           value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
           style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14 }}
         >
-          <option value="">Todos os status</option>
-          {(['Em uso', 'Home office', 'Disponível', 'Pendente devolução'] as StatusEquipamento[]).map(s => (
+          <option value="">Ativos (sem baixados)</option>
+          {(['Em uso', 'Home office', 'Disponível', 'Pendente devolução', 'Baixado'] as StatusEquipamento[]).map(s => (
             <option key={s} value={s}>{s}</option>
           ))}
         </select>
@@ -75,7 +79,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
       </div>
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 90px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 120px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
           {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Valor', 'Ações'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
           ))}
@@ -85,8 +89,9 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
         ) : (
           filtered.map(eq => (
             <div key={eq.id} style={{
-              display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 90px',
+              display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 120px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
+              opacity: eq.status === 'Baixado' ? 0.6 : 1,
             }}>
               <span
                 onClick={() => setEditing(eq)}
@@ -107,12 +112,21 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
                   : <span style={{ color: '#9ca3af' }}>—</span>}
               </span>
               <div style={{ display: 'flex', gap: 6 }}>
-                <Btn variant="secondary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setEditing(eq)}>
-                  Editar
-                </Btn>
-                <Btn variant="danger" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => handleDelete(eq.id)} disabled={deleting === eq.id}>
-                  ×
-                </Btn>
+                {eq.status !== 'Baixado' && (
+                  <>
+                    <Btn variant="secondary" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setEditing(eq)}>
+                      Editar
+                    </Btn>
+                    <Btn variant="danger" style={{ padding: '4px 10px', fontSize: 12 }} onClick={() => setBaixando(eq)}>
+                      Baixar
+                    </Btn>
+                  </>
+                )}
+                {eq.status === 'Baixado' && (
+                  <Btn variant="danger" style={{ padding: '4px 8px', fontSize: 12 }} onClick={() => handleDelete(eq.id)} disabled={deleting === eq.id}>
+                    ×
+                  </Btn>
+                )}
               </div>
             </div>
           ))
@@ -126,6 +140,13 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete }: 
           colaboradores={colaboradores}
           onSave={onSave}
           onClose={() => setEditing(null)}
+        />
+      )}
+      {baixando && (
+        <ModalBaixaEquipamento
+          equipamento={baixando}
+          onConfirm={(motivo, obs) => onBaixar(baixando.id, motivo, obs)}
+          onClose={() => setBaixando(null)}
         />
       )}
     </div>

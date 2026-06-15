@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
-import type { Colaborador, Equipamento, Movimentacao, StatusEquipamento } from '../types'
+import type { Colaborador, Equipamento, Movimentacao, MotivoBaixa, StatusEquipamento } from '../types'
 
 interface Store {
   colaboradores: Colaborador[]
@@ -14,6 +14,7 @@ interface Store {
   deleteEquipamento: (id: string) => Promise<void>
   alocarEquipamento: (equipamentoId: string, colaboradorId: number | null, responsavel: string) => Promise<void>
   desligarColaborador: (colaboradorId: number, devolvidos: string[], responsavel: string) => Promise<void>
+  baixarEquipamento: (equipamentoId: string, motivo: MotivoBaixa, observacao: string) => Promise<void>
 }
 
 export function useStore(): Store {
@@ -124,6 +125,23 @@ export function useStore(): Store {
     await load()
   }
 
+  const baixarEquipamento = async (equipamentoId: string, motivo: MotivoBaixa, observacao: string) => {
+    await supabase.from('equipamentos').update({
+      status: 'Baixado',
+      colaborador_id: null,
+    }).eq('id', equipamentoId)
+
+    await supabase.from('movimentacoes').insert({
+      data: new Date().toISOString().split('T')[0],
+      equipamento_id: equipamentoId,
+      acao: `Baixa — ${motivo}${observacao ? ': ' + observacao : ''}`,
+      colaborador_id: null,
+      responsavel: null,
+    })
+
+    await load()
+  }
+
   return {
     colaboradores,
     equipamentos,
@@ -136,5 +154,6 @@ export function useStore(): Store {
     deleteEquipamento,
     alocarEquipamento,
     desligarColaborador,
+    baixarEquipamento,
   }
 }
