@@ -17,6 +17,14 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
   const [filterStatus, setFilterStatus] = useState('')
   const [filterTipo, setFilterTipo] = useState('')
   const [editing, setEditing] = useState<Equipamento | null | 'new'>(null)
+
+  const nextId = useMemo(() => {
+    const nums = equipamentos
+      .map(e => parseInt(e.id.replace('DF-', ''), 10))
+      .filter(n => !isNaN(n))
+    const max = nums.length ? Math.max(...nums) : 0
+    return `DF-${String(max + 1).padStart(3, '0')}`
+  }, [equipamentos])
   const [baixando, setBaixando] = useState<Equipamento | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
 
@@ -137,6 +145,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
       {editing && (
         <ModalEquipamento
           equipamento={editing === 'new' ? null : editing}
+          nextId={editing === 'new' ? nextId : undefined}
           colaboradores={colaboradores}
           onSave={onSave}
           onClose={() => setEditing(null)}

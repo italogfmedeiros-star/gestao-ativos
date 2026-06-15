@@ -7,14 +7,15 @@ const SETORES: Setor[] = ['Administrativo', 'Controle de qualidade', 'Expediçã
 
 interface Props {
   equipamento?: Equipamento | null
+  nextId?: string
   colaboradores: Colaborador[]
   onSave: (data: Partial<Equipamento> & { id: string; descricao: string }) => Promise<void>
   onClose: () => void
 }
 
-export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }: Props) {
+export function ModalEquipamento({ equipamento, nextId, colaboradores, onSave, onClose }: Props) {
   const [form, setForm] = useState({
-    id: equipamento?.id ?? '',
+    id: equipamento?.id ?? nextId ?? '',
     descricao: equipamento?.descricao ?? '',
     tipo: equipamento?.tipo ?? '',
     setor: equipamento?.setor ?? '',
@@ -51,11 +52,11 @@ export function ModalEquipamento({ equipamento, colaboradores, onSave, onClose }
 
   return (
     <Modal title={isEdit ? 'Editar equipamento' : 'Novo equipamento'} onClose={onClose}>
-      <Field label="Código (etiqueta) *">
+      <Field label="Código (etiqueta)">
         <Input
-          value={form.id} placeholder="DF-034"
-          onChange={e => set('id', e.target.value)}
-          disabled={isEdit}
+          value={form.id}
+          disabled
+          style={{ background: '#f9fafb', color: '#6b7280', cursor: 'not-allowed' }}
         />
       </Field>
       <Field label="Descrição *">
