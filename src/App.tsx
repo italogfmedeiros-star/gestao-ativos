@@ -18,7 +18,9 @@ const NAV: { id: Page; label: string; icon: string }[] = [
 ]
 
 export default function App() {
-  const [page, setPage] = useState<Page>('dashboard')
+  const [page, setPage] = useState<Page>(() => (localStorage.getItem('page') as Page) ?? 'dashboard')
+
+  const navigate = (p: Page) => { setPage(p); localStorage.setItem('page', p) }
   const store = useStore()
   const pendentes = store.equipamentos.filter(e => e.status === 'Pendente devolução').length
 
@@ -53,7 +55,7 @@ export default function App() {
             return (
               <button
                 key={id}
-                onClick={() => setPage(id)}
+                onClick={() => navigate(id)}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10,
                   width: '100%', padding: '9px 12px', borderRadius: 8,
