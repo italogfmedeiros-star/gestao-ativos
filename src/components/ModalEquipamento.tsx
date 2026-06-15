@@ -53,11 +53,7 @@ export function ModalEquipamento({ equipamento, nextId, colaboradores, onSave, o
   return (
     <Modal title={isEdit ? 'Editar equipamento' : 'Novo equipamento'} onClose={onClose}>
       <Field label="Código (etiqueta)">
-        <Input
-          value={form.id}
-          disabled
-          style={{ background: '#f9fafb', color: '#6b7280', cursor: 'not-allowed' }}
-        />
+        <Input value={form.id} disabled />
       </Field>
       <Field label="Descrição *">
         <Input value={form.descricao} placeholder="Ex: All in One Positivo" onChange={e => set('descricao', e.target.value)} />
