@@ -140,7 +140,6 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
             </div>
           ))
         )}
-      </div>
         </div>
       </div>
       <div style={{ marginTop: 10, fontSize: 12, color: '#9ca3af' }}>{filtered.length} equipamento{filtered.length !== 1 ? 's' : ''}</div>
