@@ -39,7 +39,8 @@ export function Movimentacoes({ movimentacoes }: Props) {
         <Btn variant="secondary" onClick={() => setSearch('')}>Limpar</Btn>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflowX: 'auto', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+        <div style={{ minWidth: 620 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
           {['Data', 'Equipamento', 'Ação', 'Colaborador', 'Responsável'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
@@ -67,6 +68,7 @@ export function Movimentacoes({ movimentacoes }: Props) {
             </div>
           ))
         )}
+        </div>
       </div>
     </div>
   )

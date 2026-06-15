@@ -86,7 +86,8 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         </Btn>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflow: 'hidden', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflowX: 'auto', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+        <div style={{ minWidth: 700 }}>
         <div style={{ display: 'grid', gridTemplateColumns: '90px 1fr 100px 140px 150px 100px 120px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
           {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Valor', 'Ações'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
@@ -139,6 +140,8 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
             </div>
           ))
         )}
+      </div>
+        </div>
       </div>
       <div style={{ marginTop: 10, fontSize: 12, color: '#9ca3af' }}>{filtered.length} equipamento{filtered.length !== 1 ? 's' : ''}</div>
 
