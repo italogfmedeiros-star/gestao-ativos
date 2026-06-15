@@ -16,6 +16,8 @@ export function BadgeStatus({ status }: { status: StatusEquipamento }) {
       background: s.bg, color: s.color,
       padding: '2px 10px', borderRadius: 12,
       fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap',
+      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+      minWidth: 130, textAlign: 'center',
     }}>
       {status}
     </span>
