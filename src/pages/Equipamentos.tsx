@@ -88,7 +88,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
 
       <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflowX: 'auto', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
         <div style={{ minWidth: 700 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 185px 160px 100px 120px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
           {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Valor', 'Ações'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
           ))}
@@ -98,7 +98,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         ) : (
           filtered.map(eq => (
             <div key={eq.id} style={{
-              display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px',
+              display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 185px 160px 100px 120px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
               opacity: eq.status === 'Baixado' ? 0.6 : 1,
             }}>
