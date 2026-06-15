@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Avatar } from '../components/ui'
-import type { Equipamento, Movimentacao } from '../types'
+import type { Equipamento, Movimentacao, TipoEquipamento } from '../types'
 
 interface Props {
   equipamentos: Equipamento[]
@@ -18,13 +19,20 @@ function MetricCard({ label, value, color }: { label: string; value: number | st
   )
 }
 
+const TIPOS: TipoEquipamento[] = ['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Cadeira', 'Outros']
+
 export function Dashboard({ equipamentos, movimentacoes }: Props) {
-  const total = equipamentos.length
-  const emUso = equipamentos.filter(e => e.status === 'Em uso').length
-  const homeOffice = equipamentos.filter(e => e.status === 'Home office').length
-  const disponiveis = equipamentos.filter(e => e.status === 'Disponível').length
-  const pendentes = equipamentos.filter(e => e.status === 'Pendente devolução').length
-  const valorTotal = equipamentos.reduce((acc, e) => acc + (e.valor ?? 0), 0)
+  const [filterTipo, setFilterTipo] = useState('')
+
+  const ativos = equipamentos.filter(e => e.status !== 'Baixado')
+  const filtrados = filterTipo ? ativos.filter(e => e.tipo === filterTipo) : ativos
+
+  const total = ativos.length
+  const emUso = ativos.filter(e => e.status === 'Em uso').length
+  const homeOffice = ativos.filter(e => e.status === 'Home office').length
+  const disponiveis = ativos.filter(e => e.status === 'Disponível').length
+  const pendentes = ativos.filter(e => e.status === 'Pendente devolução').length
+  const valorTotal = filtrados.reduce((acc, e) => acc + (e.valor ?? 0), 0)
   const valorFormatado = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
   return (
@@ -36,8 +44,24 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
         <MetricCard label="Home office" value={homeOffice} color="#7c3aed" />
         <MetricCard label="Disponíveis" value={disponiveis} color="#15803d" />
         <MetricCard label="Pendentes devolução" value={pendentes} color="#b91c1c" />
-        <div style={{ gridColumn: 'span 2' }}>
-          <MetricCard label="Valor total" value={valorFormatado} color="#0d9488" />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <select
+            value={filterTipo}
+            onChange={e => setFilterTipo(e.target.value)}
+            style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14, background: '#fff' }}
+          >
+            <option value="">Todos os tipos</option>
+            {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+          <div style={{
+            background: '#fff', borderRadius: 12, padding: '14px 20px',
+            border: '1px solid #f0f0f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+          }}>
+            <div style={{ fontSize: 18, fontWeight: 800, color: '#0d9488' }}>{valorFormatado}</div>
+            <div style={{ fontSize: 13, color: '#6b7280', marginTop: 4 }}>
+              {filterTipo ? `Valor total — ${filterTipo}` : 'Valor total'}
+            </div>
+          </div>
         </div>
       </div>
 
