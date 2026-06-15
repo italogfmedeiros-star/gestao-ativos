@@ -23,8 +23,8 @@ export function ModalDesligamento({ colaborador, equipamentos, onConfirm, onClos
   return (
     <Modal title={`Desligar — ${colaborador.nome}`} onClose={onClose} width={480}>
       <p style={{ margin: '0 0 20px', color: '#6b7280', fontSize: 14 }}>
-        Todos os equipamentos vinculados serão automaticamente marcados como{' '}
-        <strong>Disponível</strong> e desvinculados do colaborador.
+        Todos os equipamentos vinculados serão marcados como{' '}
+        <strong>Pendente devolução</strong> até que sejam recolhidos.
       </p>
 
       {equipamentos.length > 0 && (

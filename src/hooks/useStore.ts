@@ -106,14 +106,13 @@ export function useStore(): Store {
 
     for (const eq of equipamentosDoColaborador) {
       await supabase.from('equipamentos').update({
-        status: 'Disponível',
-        colaborador_id: null,
+        status: 'Pendente devolução',
       }).eq('id', eq.id)
 
       await supabase.from('movimentacoes').insert({
         data: new Date().toISOString().split('T')[0],
         equipamento_id: eq.id,
-        acao: 'Disponível — desligamento de colaborador',
+        acao: 'Pendente devolução — colaborador desligado',
         colaborador_id: colaboradorId,
         responsavel,
       })
