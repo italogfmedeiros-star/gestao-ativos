@@ -167,6 +167,64 @@ export function Avatar({ nome }: { nome: string }) {
   )
 }
 
+interface PaginationProps {
+  total: number
+  pageSize: number
+  page: number
+  onPageSize: (n: number) => void
+  onPage: (n: number) => void
+}
+
+export function Pagination({ total, pageSize, page, onPageSize, onPage }: PaginationProps) {
+  const totalPages = Math.max(1, Math.ceil(total / pageSize))
+  const start = total === 0 ? 0 : (page - 1) * pageSize + 1
+  const end = Math.min(page * pageSize, total)
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, flexWrap: 'wrap', gap: 8 }}>
+      <span style={{ fontSize: 12, color: '#9ca3af' }}>
+        {total === 0 ? '0 resultados' : `${start}–${end} de ${total}`}
+      </span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <span style={{ fontSize: 12, color: '#6b7280' }}>Exibir</span>
+        {[10, 20, 30].map(n => (
+          <button
+            key={n}
+            onClick={() => { onPageSize(n); onPage(1) }}
+            style={{
+              padding: '4px 10px', borderRadius: 6, fontSize: 12, fontWeight: 600,
+              cursor: 'pointer', border: '1px solid #e5e7eb',
+              background: pageSize === n ? '#2563eb' : '#f3f4f6',
+              color: pageSize === n ? '#fff' : '#374151',
+            }}
+          >{n}</button>
+        ))}
+        <div style={{ display: 'flex', gap: 4, marginLeft: 8 }}>
+          <button
+            onClick={() => onPage(page - 1)} disabled={page <= 1}
+            style={{
+              padding: '4px 10px', borderRadius: 6, fontSize: 12, fontWeight: 600,
+              cursor: page <= 1 ? 'default' : 'pointer', border: '1px solid #e5e7eb',
+              background: '#f3f4f6', color: page <= 1 ? '#d1d5db' : '#374151',
+            }}
+          >‹</button>
+          <span style={{ padding: '4px 8px', fontSize: 12, color: '#6b7280', alignSelf: 'center' }}>
+            {page}/{totalPages}
+          </span>
+          <button
+            onClick={() => onPage(page + 1)} disabled={page >= totalPages}
+            style={{
+              padding: '4px 10px', borderRadius: 6, fontSize: 12, fontWeight: 600,
+              cursor: page >= totalPages ? 'default' : 'pointer', border: '1px solid #e5e7eb',
+              background: '#f3f4f6', color: page >= totalPages ? '#d1d5db' : '#374151',
+            }}
+          >›</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function EmptyState({ text }: { text: string }) {
   return (
     <div style={{ textAlign: 'center', padding: '48px 24px', color: '#9ca3af', fontSize: 14 }}>

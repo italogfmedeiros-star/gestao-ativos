@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Avatar, EmptyState, Btn } from '../components/ui'
+import { Avatar, EmptyState, Btn, Pagination } from '../components/ui'
 import type { Movimentacao } from '../types'
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
 
 export function Movimentacoes({ movimentacoes }: Props) {
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase()
@@ -19,6 +21,11 @@ export function Movimentacoes({ movimentacoes }: Props) {
       ((m.equipamento as any)?.descricao ?? '').toLowerCase().includes(q)
     )
   }, [movimentacoes, search])
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, page, pageSize])
 
   return (
     <div>
@@ -49,7 +56,7 @@ export function Movimentacoes({ movimentacoes }: Props) {
         {filtered.length === 0 ? (
           <EmptyState text="Nenhuma movimentação encontrada." />
         ) : (
-          filtered.map(m => (
+          paginated.map(m => (
             <div key={m.id} style={{
               display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
@@ -70,6 +77,7 @@ export function Movimentacoes({ movimentacoes }: Props) {
         )}
         </div>
       </div>
+      <Pagination total={filtered.length} pageSize={pageSize} page={page} onPageSize={n => { setPageSize(n); setPage(1) }} onPage={setPage} />
     </div>
   )
 }

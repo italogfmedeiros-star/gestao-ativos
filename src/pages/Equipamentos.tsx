@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { BadgeStatus, Btn, EmptyState } from '../components/ui'
+import { BadgeStatus, Btn, EmptyState, Pagination } from '../components/ui'
 import { ModalEquipamento } from '../components/ModalEquipamento'
 import { ModalBaixaEquipamento } from '../components/ModalBaixaEquipamento'
 import type { Equipamento, Colaborador, MotivoBaixa, StatusEquipamento, TipoEquipamento } from '../types'
@@ -27,6 +27,8 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
   }, [equipamentos])
   const [baixando, setBaixando] = useState<Equipamento | null>(null)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const filtered = useMemo(() => {
     return equipamentos.filter(e => {
@@ -39,6 +41,11 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
       return matchSearch && matchStatus && matchTipo
     })
   }, [equipamentos, search, filterStatus, filterTipo])
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, page, pageSize])
 
   const handleDelete = async (id: string) => {
     if (!confirm(`Remover equipamento ${id}?`)) return
@@ -96,7 +103,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         {filtered.length === 0 ? (
           <EmptyState text="Nenhum equipamento encontrado." />
         ) : (
-          filtered.map(eq => (
+          paginated.map(eq => (
             <div key={eq.id} style={{
               display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px',
               padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
@@ -142,7 +149,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         )}
         </div>
       </div>
-      <div style={{ marginTop: 10, fontSize: 12, color: '#9ca3af' }}>{filtered.length} equipamento{filtered.length !== 1 ? 's' : ''}</div>
+      <Pagination total={filtered.length} pageSize={pageSize} page={page} onPageSize={n => { setPageSize(n); setPage(1) }} onPage={setPage} />
 
       {editing && (
         <ModalEquipamento

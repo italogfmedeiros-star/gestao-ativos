@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { BadgeStatus, Avatar, EmptyState } from '../components/ui'
+import { useMemo, useState } from 'react'
+import { BadgeStatus, Avatar, EmptyState, Pagination } from '../components/ui'
 import type { Colaborador, Equipamento } from '../types'
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
 }
 
 export function HomeOffice({ colaboradores, equipamentos }: Props) {
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const hoEquips = useMemo(() =>
     equipamentos.filter(e => e.status === 'Home office'),
     [equipamentos]
@@ -25,6 +27,11 @@ export function HomeOffice({ colaboradores, equipamentos }: Props) {
     return Array.from(map.values()).sort((a, b) => a.colaborador.nome.localeCompare(b.colaborador.nome))
   }, [hoEquips, colaboradores])
 
+  const paginated = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return porColaborador.slice(start, start + pageSize)
+  }, [porColaborador, page, pageSize])
+
   return (
     <div>
       <div style={{ marginBottom: 24 }}>
@@ -38,7 +45,7 @@ export function HomeOffice({ colaboradores, equipamentos }: Props) {
         <EmptyState text="Nenhum equipamento em home office." />
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {porColaborador.map(({ colaborador, equips }) => (
+          {paginated.map(({ colaborador, equips }) => (
             <div key={colaborador.id} style={{
               background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0',
               boxShadow: '0 1px 4px rgba(0,0,0,0.05)', overflow: 'hidden',
@@ -81,6 +88,7 @@ export function HomeOffice({ colaboradores, equipamentos }: Props) {
           ))}
         </div>
       )}
+      <Pagination total={porColaborador.length} pageSize={pageSize} page={page} onPageSize={n => { setPageSize(n); setPage(1) }} onPage={setPage} />
     </div>
   )
 }

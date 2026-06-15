@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Avatar, Btn, EmptyState } from '../components/ui'
+import { Avatar, Btn, EmptyState, Pagination } from '../components/ui'
 import { ModalColaborador } from '../components/ModalColaborador'
 import { ModalDesligamento } from '../components/ModalDesligamento'
 import { ModalColaboradorDetalhe } from '../components/ModalColaboradorDetalhe'
@@ -18,6 +18,8 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
   const [editing, setEditing] = useState<Colaborador | null | 'new'>(null)
   const [desligando, setDesligando] = useState<Colaborador | null>(null)
   const [detalhe, setDetalhe] = useState<Colaborador | null>(null)
+  const [page, setPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   const filtered = useMemo(() => {
     return colaboradores.filter(c => {
@@ -27,6 +29,11 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
       return matchSearch && matchStatus
     })
   }, [colaboradores, search, filterStatus])
+
+  const paginated = useMemo(() => {
+    const start = (page - 1) * pageSize
+    return filtered.slice(start, start + pageSize)
+  }, [filtered, page, pageSize])
 
   const equipamentosDoColaborador = (id: number) => equipamentos.filter(e => e.colaborador_id === id)
 
@@ -66,7 +73,7 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
         {filtered.length === 0 ? (
           <EmptyState text="Nenhum colaborador encontrado." />
         ) : (
-          filtered.map(col => {
+          paginated.map(col => {
             const equips = equipamentosDoColaborador(col.id)
             return (
               <div key={col.id} style={{
@@ -105,7 +112,7 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
         )}
         </div>
       </div>
-      <div style={{ marginTop: 10, fontSize: 12, color: '#9ca3af' }}>{filtered.length} colaborador{filtered.length !== 1 ? 'es' : ''}</div>
+      <Pagination total={filtered.length} pageSize={pageSize} page={page} onPageSize={n => { setPageSize(n); setPage(1) }} onPage={setPage} />
 
       {editing && (
         <ModalColaborador
