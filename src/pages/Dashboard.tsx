@@ -45,18 +45,18 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
   const ativos = equipamentos.filter(e => e.status !== 'Baixado')
   const filtrados = filterTipo ? ativos.filter(e => e.tipo === filterTipo) : ativos
 
-  const total = ativos.length
-  const emUso = ativos.filter(e => e.status === 'Em uso').length
-  const homeOffice = ativos.filter(e => e.status === 'Home office').length
-  const disponiveis = ativos.filter(e => e.status === 'Disponível').length
-  const pendentes = ativos.filter(e => e.status === 'Pendente devolução').length
+  const total = filtrados.length
+  const emUso = filtrados.filter(e => e.status === 'Em uso').length
+  const homeOffice = filtrados.filter(e => e.status === 'Home office').length
+  const disponiveis = filtrados.filter(e => e.status === 'Disponível').length
+  const pendentes = filtrados.filter(e => e.status === 'Pendente devolução').length
   const valorTotal = filtrados.reduce((acc, e) => acc + (e.valor ?? 0), 0)
   const valorFormatado = valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
   return (
     <div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
-        <MetricCard label="Total de equipamentos" value={total}       accent="#6366f1" iconBg="#eef2ff" icon="ti ti-devices" />
+        <MetricCard label={filterTipo ? `Total — ${filterTipo}` : 'Total de equipamentos'} value={total} accent="#6366f1" iconBg="#eef2ff" icon="ti ti-devices" />
         <MetricCard label="Em uso"                value={emUso}       accent="#14b8a6" iconBg="#f0fdfa" icon="ti ti-check" />
         <MetricCard label="Home office"           value={homeOffice}  accent="#8b5cf6" iconBg="#f5f3ff" icon="ti ti-home" />
         <MetricCard label="Disponíveis"           value={disponiveis} accent="#f59e0b" iconBg="#fffbeb" icon="ti ti-package" />
@@ -97,7 +97,7 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
             ⚠ {pendentes} equipamento{pendentes > 1 ? 's' : ''} com devolução pendente
           </strong>
           <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {equipamentos.filter(e => e.status === 'Pendente devolução').map(e => (
+            {filtrados.filter(e => e.status === 'Pendente devolução').map(e => (
               <span key={e.id} style={{
                 background: '#fee2e2', color: '#ef4444', borderRadius: 6,
                 padding: '3px 10px', fontSize: 12, fontWeight: 600,
