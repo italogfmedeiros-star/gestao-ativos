@@ -29,7 +29,7 @@ export const equipamentosSeed: Omit<Equipamento, 'created_at' | 'colaborador'>[]
   { id: 'DF-007', descricao: 'Teclado',               tipo: 'Teclado',    setor: 'Home Office', colaborador_id: 3,    status: 'Home office', alugado: false, valor: null, observacao: null },
   { id: 'DF-008', descricao: 'Mouse',                 tipo: 'Mouse',      setor: 'Home Office', colaborador_id: 3,    status: 'Home office', alugado: false, valor: null, observacao: null },
   { id: 'DF-009', descricao: 'Headset',               tipo: 'Headset',    setor: 'Home Office', colaborador_id: 3,    status: 'Home office', alugado: false, valor: null, observacao: null },
-  { id: 'DF-010', descricao: 'Cadeira',               tipo: 'Cadeira',    setor: 'Home Office', colaborador_id: 3,    status: 'Home office', alugado: false, valor: null, observacao: null },
+  { id: 'DF-010', descricao: 'Cadeira',               tipo: 'Outros',     setor: 'Home Office', colaborador_id: 3,    status: 'Home office', alugado: false, valor: null, observacao: null },
   { id: 'DF-011', descricao: 'Notebook Lenovo',       tipo: 'Notebook',   setor: 'Home Office', colaborador_id: 4,    status: 'Home office', alugado: false, valor: null, observacao: 'Transferido de Patrícia' },
   { id: 'DF-012', descricao: 'All in One Positivo',   tipo: 'Computador', setor: 'Home Office', colaborador_id: 5,    status: 'Home office', alugado: false, valor: null, observacao: null },
   { id: 'DF-013', descricao: 'Monitor',               tipo: 'Monitor',    setor: 'Home Office', colaborador_id: 5,    status: 'Home office', alugado: false, valor: null, observacao: null },

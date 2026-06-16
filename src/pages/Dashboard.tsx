@@ -37,7 +37,7 @@ function MetricCard({ label, value, accent, iconBg, icon, flexBasis = '1 1 150px
   )
 }
 
-const TIPOS: TipoEquipamento[] = ['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Cadeira', 'Outros']
+const TIPOS: TipoEquipamento[] = ['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Smartphone', 'Outros']
 
 export function Dashboard({ equipamentos, movimentacoes }: Props) {
   const [filterTipo, setFilterTipo] = useState('')
