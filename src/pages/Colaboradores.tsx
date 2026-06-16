@@ -3,6 +3,7 @@ import { Avatar, Btn, EmptyState, Pagination } from '../components/ui'
 import { ModalColaborador } from '../components/ModalColaborador'
 import { ModalDesligamento } from '../components/ModalDesligamento'
 import { ModalColaboradorDetalhe } from '../components/ModalColaboradorDetalhe'
+import { exportColaboradoresCsv, exportColaboradoresPdf } from '../lib/export'
 import type { Colaborador, Equipamento } from '../types'
 
 interface Props {
@@ -41,7 +42,11 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
         <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#111' }}>Colaboradores</h1>
-        <Btn onClick={() => setEditing('new')}>+ Novo colaborador</Btn>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Btn variant="secondary" onClick={() => exportColaboradoresCsv(filtered, equipamentos)}>Exportar CSV</Btn>
+          <Btn variant="secondary" onClick={() => exportColaboradoresPdf(filtered, equipamentos)}>Exportar PDF</Btn>
+          <Btn onClick={() => setEditing('new')}>+ Novo colaborador</Btn>
+        </div>
       </div>
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 16 }}>

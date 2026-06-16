@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react'
 import { BadgeStatus, Btn, EmptyState, Pagination } from '../components/ui'
 import { ModalEquipamento } from '../components/ModalEquipamento'
 import { ModalBaixaEquipamento } from '../components/ModalBaixaEquipamento'
+import { exportEquipamentosCsv, exportEquipamentosPdf } from '../lib/export'
 import type { Equipamento, Colaborador, MotivoBaixa, StatusEquipamento, TipoEquipamento } from '../types'
 
 interface Props {
@@ -58,7 +59,11 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
         <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#111' }}>Equipamentos</h1>
-        <Btn onClick={() => setEditing('new')}>+ Novo equipamento</Btn>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Btn variant="secondary" onClick={() => exportEquipamentosCsv(filtered)}>Exportar CSV</Btn>
+          <Btn variant="secondary" onClick={() => exportEquipamentosPdf(filtered)}>Exportar PDF</Btn>
+          <Btn onClick={() => setEditing('new')}>+ Novo equipamento</Btn>
+        </div>
       </div>
 
       <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
