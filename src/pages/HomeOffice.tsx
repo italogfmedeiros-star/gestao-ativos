@@ -47,7 +47,7 @@ export function HomeOffice({ colaboradores, equipamentos }: Props) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {paginated.map(({ colaborador, equips }) => (
             <div key={colaborador.id} style={{
-              background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0',
+              background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0',
               boxShadow: '0 1px 4px rgba(0,0,0,0.05)', overflow: 'hidden',
             }}>
               <div style={{

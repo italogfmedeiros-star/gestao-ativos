@@ -7,14 +7,28 @@ interface Props {
   movimentacoes: Movimentacao[]
 }
 
-function MetricCard({ label, value, color }: { label: string; value: number | string; color: string }) {
+interface MetricCardProps {
+  label: string
+  value: number | string
+  accent: string
+  iconBg: string
+  icon: string
+}
+
+function MetricCard({ label, value, accent, iconBg, icon }: MetricCardProps) {
   return (
     <div style={{
-      background: '#fff', borderRadius: 12, padding: '20px 24px',
-      border: '1px solid #f0f0f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
+      background: '#fff', borderRadius: 12, padding: '16px 18px',
+      border: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden',
     }}>
-      <div style={{ fontSize: 24, fontWeight: 800, color, wordBreak: 'break-word' }}>{value}</div>
-      <div style={{ fontSize: 13, color: '#6b7280', marginTop: 4 }}>{label}</div>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: accent }} />
+      <div style={{
+        width: 34, height: 34, borderRadius: 8, background: iconBg,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 16, marginBottom: 10,
+      }}>{icon}</div>
+      <div style={{ fontSize: 22, fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 5, fontWeight: 500 }}>{label}</div>
     </div>
   )
 }
@@ -37,46 +51,48 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
 
   return (
     <div>
-      <h1 style={{ margin: '0 0 24px', fontSize: 22, fontWeight: 800, color: '#111' }}>Dashboard</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 32 }}>
-        <MetricCard label="Total de equipamentos" value={total} color="#111" />
-        <MetricCard label="Em uso" value={emUso} color="#1d4ed8" />
-        <MetricCard label="Home office" value={homeOffice} color="#7c3aed" />
-        <MetricCard label="Disponíveis" value={disponiveis} color="#15803d" />
-        <MetricCard label="Pendentes devolução" value={pendentes} color="#b91c1c" />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          <select
-            value={filterTipo}
-            onChange={e => setFilterTipo(e.target.value)}
-            style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14, background: '#fff' }}
-          >
-            <option value="">Todos os tipos</option>
-            {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
-          </select>
-          <div style={{
-            background: '#fff', borderRadius: 12, padding: '14px 20px',
-            border: '1px solid #f0f0f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
-          }}>
-            <div style={{ fontSize: 18, fontWeight: 800, color: '#0d9488' }}>{valorFormatado}</div>
-            <div style={{ fontSize: 13, color: '#6b7280', marginTop: 4 }}>
-              {filterTipo ? `Valor total — ${filterTipo}` : 'Valor total'}
-            </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 16 }}>
+        <MetricCard label="Total de equipamentos" value={total}      accent="#6366f1" iconBg="#eef2ff" icon="🖥" />
+        <MetricCard label="Em uso"                value={emUso}      accent="#14b8a6" iconBg="#f0fdfa" icon="✓" />
+        <MetricCard label="Home office"           value={homeOffice} accent="#8b5cf6" iconBg="#f5f3ff" icon="🏠" />
+        <MetricCard label="Disponíveis"           value={disponiveis} accent="#f59e0b" iconBg="#fffbeb" icon="📦" />
+        <MetricCard label="Pendentes devolução"   value={pendentes}  accent="#ef4444" iconBg="#fef2f2" icon="⚠" />
+      </div>
+
+      <div style={{
+        background: '#fff', borderRadius: 12, padding: '16px 20px', border: '1px solid #e2e8f0',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24,
+        position: 'relative', overflow: 'hidden',
+      }}>
+        <div style={{ position: 'absolute', right: -24, top: -24, width: 120, height: 120, borderRadius: '50%', background: 'rgba(20,184,166,0.06)', pointerEvents: 'none' }} />
+        <div>
+          <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: 4 }}>
+            {filterTipo ? `Valor total — ${filterTipo}` : 'Valor total do inventário'}
           </div>
+          <div style={{ fontSize: 26, fontWeight: 800, color: '#0f766e' }}>{valorFormatado}</div>
         </div>
+        <select
+          value={filterTipo}
+          onChange={e => setFilterTipo(e.target.value)}
+          style={{ padding: '7px 12px', border: '1px solid #e2e8f0', borderRadius: 8, fontSize: 13, background: '#f8fafc', color: '#475569' }}
+        >
+          <option value="">Todos os tipos</option>
+          {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
+        </select>
       </div>
 
       {pendentes > 0 && (
         <div style={{
-          background: '#fff5f5', border: '1px solid #fecaca', borderRadius: 10,
+          background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 10,
           padding: '14px 18px', marginBottom: 24,
         }}>
-          <strong style={{ color: '#b91c1c', fontSize: 14 }}>
+          <strong style={{ color: '#dc2626', fontSize: 14 }}>
             ⚠ {pendentes} equipamento{pendentes > 1 ? 's' : ''} com devolução pendente
           </strong>
           <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {equipamentos.filter(e => e.status === 'Pendente devolução').map(e => (
               <span key={e.id} style={{
-                background: '#fee2e2', color: '#b91c1c', borderRadius: 6,
+                background: '#fee2e2', color: '#ef4444', borderRadius: 6,
                 padding: '3px 10px', fontSize: 12, fontWeight: 600,
               }}>
                 {e.id} — {e.descricao}
@@ -86,27 +102,28 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
         </div>
       )}
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
-        <div style={{ padding: '16px 20px', borderBottom: '1px solid #f0f0f0' }}>
-          <h2 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: '#111' }}>Últimas movimentações</h2>
+      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0' }}>
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ width: 3, height: 16, borderRadius: 2, background: '#6366f1', display: 'inline-block' }} />
+          <h2 style={{ margin: 0, fontSize: 14, fontWeight: 700, color: '#0f172a' }}>Últimas movimentações</h2>
         </div>
         {movimentacoes.length === 0 ? (
-          <div style={{ padding: '32px', textAlign: 'center', color: '#9ca3af', fontSize: 14 }}>Nenhuma movimentação registrada.</div>
+          <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8', fontSize: 14 }}>Nenhuma movimentação registrada.</div>
         ) : (
           <div>
             {movimentacoes.slice(0, 10).map(m => (
               <div key={m.id} style={{
                 display: 'flex', alignItems: 'center', gap: 12,
-                padding: '12px 20px', borderBottom: '1px solid #fafafa',
+                padding: '11px 20px', borderBottom: '1px solid #f8fafc',
               }}>
                 {m.colaborador && <Avatar nome={(m.colaborador as any).nome ?? '?'} />}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: '#111' }}>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: '#0f172a' }}>
                     {(m.equipamento as any)?.id} — {(m.equipamento as any)?.descricao}
                   </div>
-                  <div style={{ fontSize: 12, color: '#6b7280', marginTop: 2 }}>{m.acao}</div>
+                  <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>{m.acao}</div>
                 </div>
-                <div style={{ fontSize: 12, color: '#9ca3af', whiteSpace: 'nowrap' }}>{m.data}</div>
+                <div style={{ fontSize: 12, color: '#94a3b8', whiteSpace: 'nowrap' }}>{m.data}</div>
               </div>
             ))}
           </div>

@@ -2,11 +2,11 @@ import React from 'react'
 import type { StatusEquipamento, StatusColaborador } from '../types'
 
 const statusColors: Record<StatusEquipamento, { bg: string; color: string }> = {
-  'Em uso':             { bg: '#dbeafe', color: '#1d4ed8' },
-  'Home office':        { bg: '#ede9fe', color: '#7c3aed' },
-  'Disponível':         { bg: '#dcfce7', color: '#15803d' },
-  'Pendente devolução': { bg: '#fee2e2', color: '#b91c1c' },
-  'Baixado':            { bg: '#f3f4f6', color: '#6b7280' },
+  'Em uso':             { bg: '#eef2ff', color: '#6366f1' },
+  'Home office':        { bg: '#f5f3ff', color: '#8b5cf6' },
+  'Disponível':         { bg: '#f0fdf4', color: '#16a34a' },
+  'Pendente devolução': { bg: '#fef2f2', color: '#ef4444' },
+  'Baixado':            { bg: '#f1f5f9', color: '#94a3b8' },
 }
 
 export function BadgeStatus({ status }: { status: StatusEquipamento }) {
@@ -134,9 +134,9 @@ interface BtnProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function Btn({ variant = 'primary', style, children, ...rest }: BtnProps) {
   const variants = {
-    primary:   { background: '#2563eb', color: '#fff', border: 'none' },
-    secondary: { background: '#f3f4f6', color: '#374151', border: '1px solid #e5e7eb' },
-    danger:    { background: '#fee2e2', color: '#b91c1c', border: 'none' },
+    primary:   { background: '#6366f1', color: '#fff', border: 'none' },
+    secondary: { background: '#f8fafc', color: '#374151', border: '1px solid #e2e8f0' },
+    danger:    { background: '#fef2f2', color: '#ef4444', border: '1px solid #fecaca' },
   }
   return (
     <button

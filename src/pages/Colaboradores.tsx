@@ -63,9 +63,9 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
         </Btn>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #f0f0f0', overflowX: 'auto', boxShadow: '0 1px 4px rgba(0,0,0,0.05)' }}>
+      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0', overflowX: 'auto' }}>
         <div style={{ minWidth: 580 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 130px 120px 60px 130px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f9fafb' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '40px 1fr 130px 120px 60px 130px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f8fafc' }}>
           {['', 'Nome', 'Setor', 'Regime', 'Equip.', 'Ações'].map(h => (
             <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
           ))}
@@ -85,7 +85,7 @@ export function Colaboradores({ colaboradores, equipamentos, onSave, onDesligar 
                   onClick={() => setDetalhe(col)}
                   style={{ cursor: 'pointer' }}
                 >
-                  <div style={{ fontSize: 14, fontWeight: 600, color: '#2563eb' }}>{col.nome}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#6366f1' }}>{col.nome}</div>
                   {col.email && <div style={{ fontSize: 12, color: '#9ca3af' }}>{col.email}</div>}
                 </div>
                 <span style={{ fontSize: 13, color: '#6b7280' }}>{col.setor ?? '—'}</span>
