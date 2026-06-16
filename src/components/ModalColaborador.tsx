@@ -3,7 +3,7 @@ import { Modal, Field, Input, Select, Btn } from './ui'
 import type { Colaborador, Regime, Setor } from '../types'
 
 const REGIMES: Regime[] = ['Presencial', 'Home office', 'Híbrido']
-const SETORES: Setor[] = ['Administrativo', 'Controle de qualidade', 'Expedição', 'Farmaceutico', 'Home Office', 'Inclusão', 'Laboratorio UE', 'Laboratorio UI', 'Orçamento', 'Recepção', 'Vendas']
+const SETORES: Setor[] = ['Administrativo', 'Controle de qualidade', 'Expedição', 'Farmaceutico', 'Home Office', 'Inclusão', 'Laboratorio UE', 'Laboratorio UI', 'Marketing', 'Orçamento', 'Recepção', 'Recursos humanos', 'Vendas']
 
 interface Props {
   colaborador?: Colaborador | null

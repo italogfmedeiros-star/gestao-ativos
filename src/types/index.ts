@@ -11,7 +11,7 @@ export type TipoEquipamento =
   | 'Headset'
   | 'Periférico'
   | 'Impressora'
-  | 'Cadeira'
+  | 'Smartphone'
   | 'Outros'
 export type Setor =
   | 'Administrativo'
@@ -22,8 +22,10 @@ export type Setor =
   | 'Inclusão'
   | 'Laboratorio UE'
   | 'Laboratorio UI'
+  | 'Marketing'
   | 'Orçamento'
   | 'Recepção'
+  | 'Recursos humanos'
   | 'Vendas'
 
 export interface Colaborador {

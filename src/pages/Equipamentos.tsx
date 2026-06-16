@@ -89,7 +89,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
           style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14 }}
         >
           <option value="">Todos os tipos</option>
-          {(['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Cadeira', 'Outros'] as TipoEquipamento[]).map(t => (
+          {(['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Smartphone', 'Outros'] as TipoEquipamento[]).map(t => (
             <option key={t} value={t}>{t}</option>
           ))}
         </select>
