@@ -13,13 +13,15 @@ interface MetricCardProps {
   accent: string
   iconBg: string
   icon: string
+  flexBasis?: string
 }
 
-function MetricCard({ label, value, accent, iconBg, icon }: MetricCardProps) {
+function MetricCard({ label, value, accent, iconBg, icon, flexBasis = '1 1 150px' }: MetricCardProps) {
   return (
     <div style={{
       background: '#fff', borderRadius: 12, padding: '16px 18px',
       border: '1px solid #e2e8f0', position: 'relative', overflow: 'hidden',
+      flex: flexBasis,
     }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: accent }} />
       <div style={{
@@ -53,34 +55,37 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
 
   return (
     <div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 16 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
         <MetricCard label="Total de equipamentos" value={total}       accent="#6366f1" iconBg="#eef2ff" icon="ti ti-devices" />
         <MetricCard label="Em uso"                value={emUso}       accent="#14b8a6" iconBg="#f0fdfa" icon="ti ti-check" />
         <MetricCard label="Home office"           value={homeOffice}  accent="#8b5cf6" iconBg="#f5f3ff" icon="ti ti-home" />
         <MetricCard label="Disponíveis"           value={disponiveis} accent="#f59e0b" iconBg="#fffbeb" icon="ti ti-package" />
         <MetricCard label="Pendentes devolução"   value={pendentes}   accent="#ef4444" iconBg="#fef2f2" icon="ti ti-alert-circle" />
-      </div>
 
-      <div style={{
-        background: '#fff', borderRadius: 12, padding: '16px 20px', border: '1px solid #e2e8f0',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24,
-        position: 'relative', overflow: 'hidden',
-      }}>
-        <div style={{ position: 'absolute', right: -24, top: -24, width: 120, height: 120, borderRadius: '50%', background: 'rgba(20,184,166,0.06)', pointerEvents: 'none' }} />
-        <div>
-          <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', letterSpacing: '0.5px', textTransform: 'uppercase', marginBottom: 4 }}>
-            {filterTipo ? `Valor total — ${filterTipo}` : 'Valor total do inventário'}
+        <div style={{
+          flex: '1.6 1 240px',
+          background: '#fff', borderRadius: 12, padding: '16px 18px', border: '1px solid #e2e8f0',
+          position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+        }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: '#14b8a6' }} />
+          <div style={{
+            fontSize: 11, fontWeight: 600, color: '#94a3b8', letterSpacing: '0.5px', textTransform: 'uppercase',
+            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+          }}>
+            {filterTipo ? `Valor — ${filterTipo}` : 'Valor total do inventário'}
           </div>
-          <div style={{ fontSize: 26, fontWeight: 800, color: '#0f766e' }}>{valorFormatado}</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 8 }}>
+            <div style={{ fontSize: 22, fontWeight: 800, color: '#0f766e', lineHeight: 1 }}>{valorFormatado}</div>
+            <select
+              value={filterTipo}
+              onChange={e => setFilterTipo(e.target.value)}
+              style={{ padding: '5px 8px', border: '1px solid #e2e8f0', borderRadius: 6, fontSize: 11, background: '#f8fafc', color: '#475569', maxWidth: 96, flexShrink: 0 }}
+            >
+              <option value="">Todos</option>
+              {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
+            </select>
+          </div>
         </div>
-        <select
-          value={filterTipo}
-          onChange={e => setFilterTipo(e.target.value)}
-          style={{ padding: '7px 12px', border: '1px solid #e2e8f0', borderRadius: 8, fontSize: 13, background: '#f8fafc', color: '#475569' }}
-        >
-          <option value="">Todos os tipos</option>
-          {TIPOS.map(t => <option key={t} value={t}>{t}</option>)}
-        </select>
       </div>
 
       {pendentes > 0 && (
