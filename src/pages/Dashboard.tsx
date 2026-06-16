@@ -25,8 +25,10 @@ function MetricCard({ label, value, accent, iconBg, icon }: MetricCardProps) {
       <div style={{
         width: 34, height: 34, borderRadius: 8, background: iconBg,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 16, marginBottom: 10,
-      }}>{icon}</div>
+        marginBottom: 10,
+      }}>
+        <i className={icon} aria-hidden="true" style={{ fontSize: 18, color: accent }} />
+      </div>
       <div style={{ fontSize: 22, fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>{value}</div>
       <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 5, fontWeight: 500 }}>{label}</div>
     </div>
@@ -52,11 +54,11 @@ export function Dashboard({ equipamentos, movimentacoes }: Props) {
   return (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginBottom: 16 }}>
-        <MetricCard label="Total de equipamentos" value={total}      accent="#6366f1" iconBg="#eef2ff" icon="🖥" />
-        <MetricCard label="Em uso"                value={emUso}      accent="#14b8a6" iconBg="#f0fdfa" icon="✓" />
-        <MetricCard label="Home office"           value={homeOffice} accent="#8b5cf6" iconBg="#f5f3ff" icon="🏠" />
-        <MetricCard label="Disponíveis"           value={disponiveis} accent="#f59e0b" iconBg="#fffbeb" icon="📦" />
-        <MetricCard label="Pendentes devolução"   value={pendentes}  accent="#ef4444" iconBg="#fef2f2" icon="⚠" />
+        <MetricCard label="Total de equipamentos" value={total}       accent="#6366f1" iconBg="#eef2ff" icon="ti ti-devices" />
+        <MetricCard label="Em uso"                value={emUso}       accent="#14b8a6" iconBg="#f0fdfa" icon="ti ti-check" />
+        <MetricCard label="Home office"           value={homeOffice}  accent="#8b5cf6" iconBg="#f5f3ff" icon="ti ti-home" />
+        <MetricCard label="Disponíveis"           value={disponiveis} accent="#f59e0b" iconBg="#fffbeb" icon="ti ti-package" />
+        <MetricCard label="Pendentes devolução"   value={pendentes}   accent="#ef4444" iconBg="#fef2f2" icon="ti ti-alert-circle" />
       </div>
 
       <div style={{

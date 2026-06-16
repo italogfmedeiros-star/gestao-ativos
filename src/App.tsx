@@ -10,11 +10,11 @@ import { BadgeCount } from './components/ui'
 type Page = 'dashboard' | 'equipamentos' | 'colaboradores' | 'homeoffice' | 'movimentacoes'
 
 const NAV: { id: Page; label: string; icon: string }[] = [
-  { id: 'dashboard',     label: 'Dashboard',     icon: '◉' },
-  { id: 'equipamentos',  label: 'Equipamentos',  icon: '🖥' },
-  { id: 'colaboradores', label: 'Colaboradores', icon: '👤' },
-  { id: 'homeoffice',    label: 'Home Office',   icon: '🏠' },
-  { id: 'movimentacoes', label: 'Movimentações', icon: '↕' },
+  { id: 'dashboard',     label: 'Dashboard',     icon: 'ti ti-layout-dashboard' },
+  { id: 'equipamentos',  label: 'Equipamentos',  icon: 'ti ti-devices' },
+  { id: 'colaboradores', label: 'Colaboradores', icon: 'ti ti-users' },
+  { id: 'homeoffice',    label: 'Home Office',   icon: 'ti ti-home' },
+  { id: 'movimentacoes', label: 'Movimentações', icon: 'ti ti-arrows-exchange' },
 ]
 
 export default function App() {
@@ -97,7 +97,7 @@ export default function App() {
                 transition: 'all 0.15s',
               }}
             >
-              <span style={{ fontSize: 16, opacity: active ? 1 : 0.7 }}>{icon}</span>
+              <i className={icon} aria-hidden="true" style={{ fontSize: 18, opacity: active ? 1 : 0.7 }} />
               <span style={{ flex: 1 }}>{label}</span>
               {showBadge && <BadgeCount count={pendentes} />}
             </button>
