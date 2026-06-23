@@ -3,6 +3,7 @@ export type StatusColaborador = 'Ativo' | 'Desligado'
 export type StatusEquipamento = 'Em uso' | 'Home office' | 'Disponível' | 'Pendente devolução' | 'Baixado'
 export type MotivoBaixa = 'Upgrade' | 'Defeito' | 'Perda' | 'Obsolescência'
 export type TipoEquipamento =
+  | 'All in one'
   | 'Computador'
   | 'Notebook'
   | 'Monitor'

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Modal, Field, Input, Select, Textarea, Btn } from './ui'
 import type { Equipamento, Colaborador, TipoEquipamento, Setor } from '../types'
 
-const TIPOS: TipoEquipamento[] = ['Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Smartphone', 'Outros']
+const TIPOS: TipoEquipamento[] = ['All in one', 'Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Smartphone', 'Outros']
 const SETORES: Setor[] = ['Administrativo', 'Controle de qualidade', 'Expedição', 'Farmaceutico', 'Home Office', 'Inclusão', 'Laboratorio UE', 'Laboratorio UI', 'Marketing', 'Orçamento', 'Recepção', 'Recursos humanos', 'Vendas']
 
 interface Props {
