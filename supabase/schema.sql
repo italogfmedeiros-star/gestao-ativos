@@ -17,7 +17,7 @@ create table if not exists colaboradores (
 create table if not exists equipamentos (
   id             text primary key,
   descricao      text not null,
-  tipo           text,
+  tipo           text check (tipo in ('All in one','Computador','Notebook','Monitor','Teclado','Mouse','Headset','Periférico','Impressora','Smartphone','Outros')),
   setor          text,
   colaborador_id integer references colaboradores(id) on delete set null,
   status         text check (status in ('Em uso','Home office','Disponível','Pendente devolução')) default 'Disponível',
