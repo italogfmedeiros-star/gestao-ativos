@@ -39,7 +39,8 @@ export default function App() {
   const currentLabel = NAV.find(n => n.id === page)?.label ?? ''
 
   if (store.loading) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', color: '#64748b', fontSize: 15, background: '#f1f5f9' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: 10, color: '#94a3b8', fontSize: 14, background: '#f8fafc' }}>
+      <span style={{ width: 16, height: 16, borderRadius: '50%', border: '2px solid #e2e8f0', borderTopColor: '#6366f1', display: 'inline-block', animation: 'spin 0.8s linear infinite' }} />
       Carregando...
     </div>
   )
@@ -53,30 +54,28 @@ export default function App() {
 
   const sidebar = (
     <aside style={{
-      width: 220, background: '#0f172a', display: 'flex', flexDirection: 'column',
+      width: 220, background: 'linear-gradient(165deg, #0f172a 0%, #131c30 60%, #0d1520 100%)', display: 'flex', flexDirection: 'column',
       flexShrink: 0, position: 'relative', overflow: 'hidden',
       ...(isMobile ? {
         position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 200,
         transform: menuOpen ? 'translateX(0)' : 'translateX(-100%)',
-        transition: 'transform 0.25s ease',
+        transition: 'transform 0.35s cubic-bezier(0.32, 0.72, 0, 1)',
         boxShadow: menuOpen ? '4px 0 32px rgba(0,0,0,0.3)' : 'none',
       } : {}),
     }}>
-      <div style={{ position: 'absolute', width: 220, height: 220, borderRadius: '50%', background: 'rgba(99,102,241,0.12)', top: -70, left: -70, pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', width: 160, height: 160, borderRadius: '50%', background: 'rgba(20,184,166,0.08)', bottom: 60, right: -55, pointerEvents: 'none' }} />
-
-      <div style={{ padding: '24px 20px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
+      <div style={{ padding: '24px 20px 0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #14b8a6)', display: 'inline-block', flexShrink: 0 }} />
-            <span style={{ fontSize: 15, fontWeight: 800, color: '#f8fafc', letterSpacing: '-0.2px' }}>Dermaflora</span>
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'linear-gradient(135deg, #6366f1, #14b8a6)', display: 'inline-block', flexShrink: 0 }} />
+            <span style={{ fontSize: 13, fontWeight: 800, color: '#f8fafc', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Dermaflora</span>
           </div>
-          <div style={{ fontSize: 11, color: '#475569', marginTop: 3, letterSpacing: '0.4px', textTransform: 'uppercase', paddingLeft: 16 }}>Gestão de Ativos TI</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.28)', marginTop: 3, letterSpacing: '0.12em', textTransform: 'uppercase', paddingLeft: 15 }}>Gestão de Ativos TI</div>
         </div>
         {isMobile && (
-          <button onClick={() => setMenuOpen(false)} style={{ background: 'none', border: 'none', fontSize: 22, cursor: 'pointer', color: '#64748b', padding: 4 }}>×</button>
+          <button onClick={() => setMenuOpen(false)} style={{ background: 'rgba(255,255,255,0.06)', border: 'none', borderRadius: 8, cursor: 'pointer', color: '#94a3b8', padding: '4px 8px', fontSize: 18 }}>×</button>
         )}
       </div>
+      <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(255,255,255,0.08) 0%, transparent 100%)', margin: '16px 20px 4px', position: 'relative', zIndex: 1 }} />
 
       <nav style={{ flex: 1, padding: '4px 10px', position: 'relative', zIndex: 1 }}>
         {NAV.map(({ id, label, icon }) => {
@@ -86,15 +85,16 @@ export default function App() {
             <button
               key={id}
               onClick={() => navigate(id)}
+              className="nav-item"
               style={{
                 display: 'flex', alignItems: 'center', gap: 10,
                 width: '100%', padding: '9px 12px', borderRadius: 8,
-                background: active ? 'rgba(99,102,241,0.18)' : 'transparent',
-                border: active ? '1px solid rgba(99,102,241,0.3)' : '1px solid transparent',
-                color: active ? '#e2e8f0' : '#94a3b8',
+                background: active ? 'rgba(99,102,241,0.12)' : 'transparent',
+                border: active ? '1px solid rgba(99,102,241,0.2)' : '1px solid transparent',
+                boxShadow: active ? 'inset 0 0 20px rgba(99,102,241,0.06)' : 'none',
+                color: active ? '#f1f5f9' : '#94a3b8',
                 cursor: 'pointer', fontSize: 13,
-                fontWeight: active ? 600 : 400, marginBottom: 2, textAlign: 'left',
-                transition: 'all 0.15s',
+                fontWeight: active ? 600 : 400, marginBottom: 3, textAlign: 'left',
               }}
             >
               <i className={icon} aria-hidden="true" style={{ fontSize: 18, opacity: active ? 1 : 0.7 }} />
@@ -105,14 +105,14 @@ export default function App() {
         })}
       </nav>
 
-      <div style={{ padding: '14px 20px', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 11, color: '#334155', position: 'relative', zIndex: 1 }}>
+      <div style={{ padding: '14px 20px', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: 11, color: 'rgba(255,255,255,0.18)', position: 'relative', zIndex: 1 }}>
         v1.0.0
       </div>
     </aside>
   )
 
   return (
-    <div style={{ display: 'flex', height: '100vh', background: '#f1f5f9', fontFamily: "'Inter', system-ui, sans-serif" }}>
+    <div style={{ display: 'flex', height: '100vh', background: '#f1f5f9' }}>
       {!isMobile && sidebar}
 
       {isMobile && (
@@ -143,11 +143,14 @@ export default function App() {
           </header>
         ) : (
           <header style={{
-            height: 56, background: '#fff', borderBottom: '1px solid #e2e8f0',
+            height: 56,
+            background: 'rgba(255,255,255,0.85)',
+            backdropFilter: 'blur(20px)',
+            boxShadow: '0 1px 0 rgba(226,232,240,0.8), 0 4px 16px rgba(0,0,0,0.04)',
             display: 'flex', alignItems: 'center', padding: '0 32px',
             justifyContent: 'space-between', flexShrink: 0,
           }}>
-            <span style={{ fontSize: 16, fontWeight: 700, color: '#0f172a' }}>{currentLabel}</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#0f172a', letterSpacing: '-0.01em' }}>{currentLabel}</span>
             <div style={{
               width: 32, height: 32, borderRadius: '50%',
               background: 'linear-gradient(135deg, #6366f1, #14b8a6)',

@@ -30,7 +30,7 @@ export function Movimentacoes({ movimentacoes }: Props) {
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#111' }}>Movimentações</h1>
+        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>Movimentações</h1>
         <span style={{ fontSize: 13, color: '#9ca3af' }}>{movimentacoes.length} registros</span>
       </div>
 
@@ -39,27 +39,28 @@ export function Movimentacoes({ movimentacoes }: Props) {
           value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Buscar por equipamento, ação ou colaborador..."
           style={{
-            flex: 1, padding: '8px 12px', border: '1px solid #ddd',
-            borderRadius: 8, fontSize: 14, outline: 'none', boxSizing: 'border-box',
+            flex: 1, padding: '9px 14px', border: '1px solid #e2e8f0',
+            borderRadius: 10, fontSize: 14, outline: 'none', boxSizing: 'border-box',
+            background: '#ffffff', boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
           }}
         />
         <Btn variant="secondary" onClick={() => setSearch('')}>Limpar</Btn>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0', overflowX: 'auto' }}>
-        <div style={{ minWidth: 620 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f8fafc' }}>
+      <div style={{ background: 'rgba(241,245,249,0.7)', border: '1px solid rgba(226,232,240,0.5)', borderRadius: 20, padding: 6, boxShadow: '0 0 0 1px rgba(255,255,255,0.85) inset' }}>
+        <div style={{ minWidth: 620, background: '#ffffff', borderRadius: 15, boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px', padding: '12px 16px', borderBottom: '1px solid #e2e8f0', background: 'linear-gradient(0deg, #f8fafc, #ffffff)' }}>
           {['Data', 'Equipamento', 'Ação', 'Colaborador', 'Responsável'].map(h => (
-            <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
+            <span key={h} style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{h}</span>
           ))}
         </div>
         {filtered.length === 0 ? (
           <EmptyState text="Nenhuma movimentação encontrada." />
         ) : (
           paginated.map(m => (
-            <div key={m.id} style={{
+            <div key={m.id} className="table-row" style={{
               display: 'grid', gridTemplateColumns: '100px 130px 1fr 150px 110px',
-              padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
+              padding: '14px 16px', borderBottom: '1px solid rgba(241,245,249,0.8)', alignItems: 'center',
             }}>
               <span style={{ fontSize: 13, color: '#6b7280' }}>{m.data}</span>
               <div>

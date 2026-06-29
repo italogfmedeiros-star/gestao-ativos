@@ -58,7 +58,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#111' }}>Equipamentos</h1>
+        <h1 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>Equipamentos</h1>
         <div style={{ display: 'flex', gap: 8 }}>
           <Btn variant="secondary" onClick={() => exportEquipamentosCsv(filtered)}>Exportar CSV</Btn>
           <Btn variant="secondary" onClick={() => exportEquipamentosPdf(filtered)}>Exportar PDF</Btn>
@@ -71,13 +71,14 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
           value={search} onChange={e => setSearch(e.target.value)}
           placeholder="Buscar por código, descrição ou colaborador..."
           style={{
-            flex: 1, minWidth: 200, padding: '8px 12px', border: '1px solid #ddd',
-            borderRadius: 8, fontSize: 14, outline: 'none',
+            flex: 1, minWidth: 200, padding: '9px 14px', border: '1px solid #e2e8f0',
+            borderRadius: 10, fontSize: 14, outline: 'none', background: '#ffffff',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
           }}
         />
         <select
           value={filterStatus} onChange={e => setFilterStatus(e.target.value)}
-          style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14 }}
+          style={{ padding: '9px 12px', border: '1px solid #e2e8f0', borderRadius: 10, fontSize: 14, outline: 'none', background: '#ffffff', boxShadow: '0 1px 2px rgba(0,0,0,0.04)', cursor: 'pointer' }}
         >
           <option value="">Ativos (sem baixados)</option>
           {(['Em uso', 'Home office', 'Disponível', 'Pendente devolução', 'Baixado'] as StatusEquipamento[]).map(s => (
@@ -86,7 +87,7 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         </select>
         <select
           value={filterTipo} onChange={e => setFilterTipo(e.target.value)}
-          style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, fontSize: 14 }}
+          style={{ padding: '9px 12px', border: '1px solid #e2e8f0', borderRadius: 10, fontSize: 14, outline: 'none', background: '#ffffff', boxShadow: '0 1px 2px rgba(0,0,0,0.04)', cursor: 'pointer' }}
         >
           <option value="">Todos os tipos</option>
           {(['All in one', 'Computador', 'Notebook', 'Monitor', 'Teclado', 'Mouse', 'Headset', 'Periférico', 'Impressora', 'Smartphone', 'Outros'] as TipoEquipamento[]).map(t => (
@@ -98,20 +99,20 @@ export function Equipamentos({ equipamentos, colaboradores, onSave, onDelete, on
         </Btn>
       </div>
 
-      <div style={{ background: '#fff', borderRadius: 12, border: '1px solid #e2e8f0', overflowX: 'auto' }}>
-        <div style={{ minWidth: 700 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px', padding: '10px 16px', borderBottom: '1px solid #f0f0f0', background: '#f8fafc' }}>
+      <div style={{ background: 'rgba(241,245,249,0.7)', border: '1px solid rgba(226,232,240,0.5)', borderRadius: 20, padding: 6, boxShadow: '0 0 0 1px rgba(255,255,255,0.85) inset' }}>
+        <div style={{ minWidth: 700, background: '#ffffff', borderRadius: 15, boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.06)', overflowX: 'auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px', padding: '12px 16px', borderBottom: '1px solid #e2e8f0', background: 'linear-gradient(0deg, #f8fafc, #ffffff)' }}>
           {['Código', 'Descrição', 'Tipo', 'Status', 'Colaborador', 'Valor', 'Ações'].map(h => (
-            <span key={h} style={{ fontSize: 12, fontWeight: 700, color: '#6b7280', textTransform: 'uppercase', letterSpacing: 0.5 }}>{h}</span>
+            <span key={h} style={{ fontSize: 10, fontWeight: 700, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{h}</span>
           ))}
         </div>
         {filtered.length === 0 ? (
           <EmptyState text="Nenhum equipamento encontrado." />
         ) : (
           paginated.map(eq => (
-            <div key={eq.id} style={{
+            <div key={eq.id} className="table-row" style={{
               display: 'grid', gridTemplateColumns: '90px minmax(120px,1fr) 110px 165px 160px 100px 120px',
-              padding: '12px 16px', borderBottom: '1px solid #fafafa', alignItems: 'center',
+              padding: '14px 16px', borderBottom: '1px solid rgba(241,245,249,0.8)', alignItems: 'center',
               opacity: eq.status === 'Baixado' ? 0.6 : 1,
             }}>
               <span
